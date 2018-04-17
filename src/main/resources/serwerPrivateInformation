@@ -1,0 +1,9 @@
+//start zookiper:sudo /opt/Kafka/kafka_2.11-0.11.0.1/bin/kafka-server-start.sh /opt/Kafka/kafka_2.11-0.11.0.1/config/server.properties
+
+
+
+            //start serwer:sudo /opt/Kafka/kafka_2.11-0.11.0.1/bin/kafka-server-start.sh /opt/Kafka/kafka_2.11-0.11.0.1/config/server.properties
+///*-->consumer*/       /* sudo /home/jwisniowski/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic customerload --from-beginning*/
+
+    //sudo /home/jwisniowski/kafka/bin/kafka-console-consumer.sh
+    //--bootstrap-server localhost:9092 --topic text --from-beginning
