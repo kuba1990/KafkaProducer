@@ -24,6 +24,8 @@ public class FileReader {
     public void readContent(String pathFile) throws IOException {
             Files.readAllLines(Paths.get("/home/jwisniowski/Desktop/Notify/Kuba"))
                     .stream()
+                    .map(line -> line.split("\\s+"))
+                    .flatMap(Arrays::stream)
                     .forEach(word->sender.send("helloworld.t", word));
     }
 }
