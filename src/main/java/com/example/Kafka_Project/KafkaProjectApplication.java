@@ -11,8 +11,11 @@ import java.io.IOException;
 public class KafkaProjectApplication {
 
     public static void main(String[] args) throws IOException {
+
         ConfigurableApplicationContext context =
                 SpringApplication.run(KafkaProjectApplication.class, args);
         context.getBean(FileReader.class).readContent("/home/jwisniowski/Desktop/Notify");
+
+
     }
 }

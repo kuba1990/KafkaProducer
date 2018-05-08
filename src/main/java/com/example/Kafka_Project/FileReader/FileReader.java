@@ -2,31 +2,63 @@ package com.example.Kafka_Project.FileReader;
 
 import com.example.Kafka_Project.Sender.Sender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.management.MXBean;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.stream.Collectors;
+import java.util.List;
 
-import static java.lang.System.out;
 
 @Component
 public class FileReader {
 
+    private static List<String> fileName = new ArrayList<>();
+
     @Autowired
     private Sender sender;
 
+    private PathConfiguration pathConfiguration;
+
+    public FileReader(PathConfiguration pathConfiguration) {
+        this.pathConfiguration = pathConfiguration;
+    }
+
     public void readContent(String pathFile) throws IOException {
-            Files.readAllLines(Paths.get("/home/jwisniowski/Desktop/Notify/Kuba"))
+
+        long count = getNumberFileInDirectory();
+        for (int a = 0; a < count; a++) {
+            Files.readAllLines(Paths.get(getFileName().get(a)))
                     .stream()
                     .map(line -> line.split("\\s+"))
                     .flatMap(Arrays::stream)
-                    .forEach(word->sender.send("helloworld.t", word));
+                    .forEach(word -> sender.send("hellgit oworld.t", word));
+        }
     }
-}
 
+    private long getNumberFileInDirectory() throws IOException {
+        return Files.list(Paths.get(getDirectory()))
+                .filter(p -> p.toFile().isFile())
+                .count();
+    }
+
+    public List<String> getFileName() throws IOException {
+        File f = new File(getDirectory());
+
+        File[] files = f.listFiles();
+        String pathName = null;
+        for (File file : files) {
+            fileName.add(file.getCanonicalPath().toString());
+        }
+        return fileName;
+    }
+
+    private String getDirectory() {
+        String myPath = pathConfiguration.getPaths().get(0);
+        return myPath;
+    }
+
+}
