@@ -35,7 +35,7 @@ public class FileReader {
                     .stream()
                     .map(line -> line.split("\\s+"))
                     .flatMap(Arrays::stream)
-                    .forEach(word -> sender.send("hellgit oworld.t", word));
+                    .forEach(word -> sender.send("helloworld.t", word));
         }
     }
 
