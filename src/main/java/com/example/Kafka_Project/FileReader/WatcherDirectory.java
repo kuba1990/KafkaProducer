@@ -21,9 +21,12 @@ public class WatcherDirectory {
     @Autowired
     private FileReader fileReader;
 
+    @Autowired
+    PathConfiguration pathConfiguration;
+
     public void watch() throws IOException, InterruptedException {
         WatchService service = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get("/home/jwisniowski/Desktop/Notify");
+        Path path = Paths.get(getPath());
         path.register(service, StandardWatchEventKinds.ENTRY_CREATE);
 
         while (true) {
@@ -31,13 +34,17 @@ public class WatcherDirectory {
             for (WatchEvent event : key.pollEvents()) {
                 Path fileName = (Path) event.context();
                 System.out.println(event.kind().name());
-
-                System.out.println("/home/jwisniowski/Desktop/Notify/"+fileName);
-                fileReader.readContentNewFile("/home/jwisniowski/Desktop/Notify/"+fileName);
-
+                //System.out.println("/home/jwisniowski/Desktop/Notify/"+fileName);
+                fileReader.readContentNewFile(getPath()+"/"+fileName);
 
             }
             key.reset();
         }
     }
+
+    private String getPath(){
+        return pathConfiguration.getPaths().get(0);
+
+    }
+
 }
